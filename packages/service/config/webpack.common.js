@@ -8,6 +8,7 @@ module.exports = {
         library: {
             type: 'umd'
         },
+        clean:true
     },
     resolve: {
         extensions: ['.ts', '.js']

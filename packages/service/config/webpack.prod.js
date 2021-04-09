@@ -5,4 +5,15 @@ const common = require('./webpack.common.js');
 module.exports = merge(common,{
     mode:'production',
     entry:path.resolve(__dirname,"../src/index.ts"),
+    optimization:{
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
+        },
+    }
 })
