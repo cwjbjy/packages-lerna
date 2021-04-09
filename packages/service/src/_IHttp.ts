@@ -5,8 +5,7 @@ export type Method = 'get' | 'GET' | 'delete' | 'DELETE' | 'post' | 'POST' | 'pu
 export interface IParams {
     url:string,
     auth?:AuthEnum,
-    data?:any,
-    baseUrl?:string
+    data?:any
 }
 
 export interface IRequestParams extends IParams{

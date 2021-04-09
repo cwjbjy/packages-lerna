@@ -3,6 +3,7 @@ import AuthEnum from './_Auth';
 import Cookie from 'js-cookie'
 
 abstract class HttpClient{
+    protected headers:any;
     protected config:any;
     protected token:IToken|undefined;
     protected abstract interceptorsRequest(params:any):any;
@@ -30,7 +31,7 @@ abstract class HttpClient{
         }
     }
 
-    async get({url,data,auth=AuthEnum.VISITOR}:IParams){
+    public async get({url,data,auth=AuthEnum.VISITOR}:IParams){
         return await this.requestFactory({
             method:'GET',
             url,
@@ -39,7 +40,7 @@ abstract class HttpClient{
         })
     }
 
-    async post({url,data,auth=AuthEnum.VISITOR}:IParams){
+    public async post({url,data,auth=AuthEnum.VISITOR}:IParams){
         return await this.requestFactory({
             method:'POST',
             url,
@@ -48,7 +49,7 @@ abstract class HttpClient{
         })
     }
 
-    async patch({url,data,auth=AuthEnum.VISITOR}:IParams){
+    public async patch({url,data,auth=AuthEnum.VISITOR}:IParams){
         return await this.requestFactory({
             method:'PATCH',
             url,
@@ -57,7 +58,7 @@ abstract class HttpClient{
         })
     }
 
-    async delete({url,data,auth=AuthEnum.VISITOR}:IParams){
+    public async delete({url,data,auth=AuthEnum.VISITOR}:IParams){
         return await this.requestFactory({
             method:'DELETE',
             url,
@@ -66,7 +67,7 @@ abstract class HttpClient{
         })
     }
     
-    async put({url,data,auth=AuthEnum.VISITOR}:IParams){
+    public async put({url,data,auth=AuthEnum.VISITOR}:IParams){
         return await this.requestFactory({
             method:'PUT',
             url,

@@ -3,28 +3,35 @@ import AuthEnum from './_Auth'
 import {IRequestParams,IFetchParams,IFetchRequest} from './_IHttp'
 
 class FetchClient extends HttpClient{
-    protected config:RequestInit;
-    protected headers = new Headers()
     constructor (args?:IFetchRequest) {
         super(args?args.token:undefined)
+        this.headers={},
         this.config={
             cache:'no-cache',
-            headers:{}
         }       
     }
     protected interceptorsRequest(params:IRequestParams):Promise<IFetchParams>{
         return new Promise((resolve,reject)=>{
-            if(typeof this.token !== 'undefined'){
-                if(params.auth === AuthEnum.USER){
-                    this.headers.set(this.token.to,'固定token')
-                }else if(params.auth === AuthEnum.ADMIN){
-                    this.headers.set(this.token.to,this.getToken())
-                }else{
-                    this.headers.delete(this.token.to)
+            let custom:string|undefined = this.token?.to
+            let headers ={};
+            if(custom){
+                switch(params.auth){
+                    case AuthEnum.ADMIN: //需要token
+                    headers = Object.assign({},this.headers,{
+                        [custom]:`Bearer ${this.getToken()}`
+                    });
+                    break;
+                    case AuthEnum.USER: //前端固定token
+                    headers = Object.assign({},this.headers,{
+                        [custom]:`Basic 123`
+                    });
+                    break;
+                    case AuthEnum.VISITOR: //不需要token
+                    headers = Object.assign({},this.headers,{});
+                    break;
                 }
             }
-
-            let config = Object.assign({},this.config,{methods:params?.method,header:this.headers});
+            let config = Object.assign({},this.config,{method:params?.method,headers});
             if(params.data){
                 if(params.data instanceof FormData){
                     config.body = params.data
@@ -32,6 +39,7 @@ class FetchClient extends HttpClient{
                     config.body = JSON.stringify(params.data)
                 }
             }
+            console.log('config',config)
             resolve({
                 url:params.url,
                 config
