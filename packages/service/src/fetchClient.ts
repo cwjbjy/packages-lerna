@@ -1,5 +1,6 @@
 import HttpClient from './_HttpClient'
 import AuthEnum from './_Auth'
+import qs from 'qs'
 import {IRequestParams,IFetchParams,IFetchRequest} from './_IHttp'
 
 class FetchClient extends HttpClient{
@@ -14,6 +15,7 @@ class FetchClient extends HttpClient{
         return new Promise((resolve,reject)=>{
             let custom:string|undefined = this.token?.to
             let headers ={};
+            //增加headers会产生一次预请求
             if(custom){
                 switch(params.auth){
                     case AuthEnum.ADMIN: //需要token
@@ -33,13 +35,17 @@ class FetchClient extends HttpClient{
             }
             let config = Object.assign({},this.config,{method:params?.method,headers});
             if(params.data){
-                if(params.data instanceof FormData){
-                    config.body = params.data
+                if(params.method == 'GET' || params.method == 'DELETE'){
+                    params.data = qs.stringify(params.data,{arrayFormat: 'brackets'})
+                    params.url = `${params.url}?${params.data}`
                 }else{
-                    config.body = JSON.stringify(params.data)
+                    if(params.data instanceof FormData){
+                        config.body = params.data
+                    }else{
+                        config.body = JSON.stringify(params.data)
+                    }
                 }
             }
-            console.log('config',config)
             resolve({
                 url:params.url,
                 config

@@ -1,5 +1,5 @@
 import AuthEnum from './_Auth'
-
+import {AxiosRequestConfig} from 'axios'
 export type Method = 'get' | 'GET' | 'delete' | 'DELETE' | 'post' | 'POST' | 'put' | 'PUT' | 'patch' | 'PATCH';
 
 export interface IParams {
@@ -24,5 +24,9 @@ export interface IToken{
 }
 
 export interface IFetchRequest{
+    token?:IToken
+}
+
+export interface IAxiosRequest extends AxiosRequestConfig{
     token?:IToken
 }
