@@ -1,8 +1,8 @@
 {
-  "name": "@wj.cao/menu",
+  "name": "wjmenu",
   "version": "0.1.0",
   "private": false,
-  "main": "lib/cwjmenu.umd.min.js",
+  "main": "index.js",
   "author": "cwj",
   "license": "MIT",
   "scripts": {
