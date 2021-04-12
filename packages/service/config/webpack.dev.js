@@ -7,7 +7,7 @@ module.exports = merge(common,{
     entry:path.resolve(__dirname,"../public/index.ts"),
     devServer:{
         open:true,
-        port:8888,
+        port:8889,
         compress:true
     }
 })

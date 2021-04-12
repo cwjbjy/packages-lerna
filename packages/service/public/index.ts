@@ -3,6 +3,7 @@ import AuthEnum from '../src/_Auth'
 import Cookie from 'js-cookie'
 const FetchInstance = new HttpClient.FetchClient({token:{type:'cookie',from:'token',to:'Authorization'}})
 const AxiosInstance = new HttpClient.AxiosClient({token:{type:'cookie',from:'token',to:'Authorization'}})
+const WSInstance = new HttpClient.WSClient('ws://127.0.0.1:3999')
 class TestClass{
     constructor(){
         const userForm = new FormData();
@@ -76,6 +77,18 @@ class TestClass{
                     name:'post',
                     tel:'123'
                 }
+            })
+        };
+        WSInstance.connect();
+        (document.querySelector('#WSConnect') as HTMLButtonElement).onclick= function(){
+            WSInstance.sendMessage({
+                type:'setName',
+                name:'张三',
+                image:''
+            })
+            WSInstance.onMessage((res:any,key:string)=>{
+                console.log(res)
+                console.log(key)
             })
         };
     }
