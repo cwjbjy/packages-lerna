@@ -91,6 +91,9 @@ class TestClass{
                 console.log(key)
             })
         };
+        (document.querySelector('#WSClose') as HTMLButtonElement).onclick= function(){
+            WSInstance.close()
+        };
     }
 }
 
