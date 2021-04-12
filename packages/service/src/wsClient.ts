@@ -5,7 +5,7 @@ interface IWsQueue {
 export default class WsClient {
   private Instance!: WebSocket;
   private url!: string;
-  private time: number = 3000;
+  private time: number = 30000;
   private resQueue: IWsQueue = {}; //响应队列
   private keepAlive!: any;
 
